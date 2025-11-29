@@ -50,7 +50,7 @@ export default class App {
     this.state = {
       currentPage: "login",
     };
-    this.appElement = document.getElementById("app"); 
+    this.appElement = document.getElementById("app");
   }
 
   stringToDOM(html: string): DocumentFragment {
