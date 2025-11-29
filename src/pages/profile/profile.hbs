@@ -1,0 +1,16 @@
+<div class="pageContainer">
+  <div class="pageContent pageContent__profile">
+    {{> Avatar id="avatar" src="../../../public/dog.jpg"}}
+    <h1>Лерия</h1>
+    <form id="loginForm" class="form">
+      {{> ProfileString id="email" name="Почта" value="bajieri@gmail.com"}}
+      {{> ProfileString id="first_name" name="Имя" value="Валерия"}}
+      {{> ProfileString id="second_name" name="Фамилия" value="Ехно"}}
+      {{> ProfileString id="display_name" name="Логин" value="Leriyyaa"}}
+      {{> ProfileString id="phone" name="Номер телефона" value="+79786978375"}}
+  
+      {{> Button id="enter" text="Редактировать"}}
+    </form>
+  </div>
+ {{> Footer}} 
+ </div>

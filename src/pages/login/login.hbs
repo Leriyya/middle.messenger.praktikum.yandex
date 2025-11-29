@@ -1,0 +1,14 @@
+<div class="pageContainer">
+  <div class="pageContent">
+    <h1>Вход</h1>
+    <form id="loginForm" class="form">
+      <div>
+        {{> Input name="login" type="text" placeholder="Введите логин"}}
+        {{> Input name="password" type="password" placeholder="Введите пароль"}}
+      </div>
+      {{> Button id="enter" text="Войти"}}
+    </form>
+    {{> Link data-page="signup" href="/signup" text="Ещё не зарегистрированы?"}}
+  </div>
+  {{> Footer}}
+</div>

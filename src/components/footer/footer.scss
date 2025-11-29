@@ -1,0 +1,14 @@
+.footer {
+  flex-shrink: 0;
+  margin-top: auto;
+  padding: 24px 50px;
+  border-top: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
+  background-color: #1e1c1c;
+
+  &__link {
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+  }
+}

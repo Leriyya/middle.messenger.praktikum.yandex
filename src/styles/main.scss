@@ -1,0 +1,153 @@
+:root {
+  --primary-color: #3369f3;
+  --secondary-color: #2c3e50;
+  --background-color: #f4f4f4;
+  --text-color: #333;
+  --error-color: #e74c3c;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  margin: 0 auto;
+}
+
+.pageContainer {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding-top: 40px;
+}
+
+.pageContent {
+  margin: 0 auto;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0px 0px 6px 0px #00000024;
+  min-height: 450px;
+  width: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__profile {
+    width: 700px;
+    box-shadow: none;
+  }
+}
+
+.pageCenter {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.containerError {
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+
+  &__title {
+    font-size: 96px;
+    margin: 0;
+    font-weight: 700;
+    color: #222;
+  }
+
+  &__text {
+    font-size: 20px;
+    margin: 10px 0 20px;
+    color: #555;
+  }
+
+  &__link {
+    display: inline-block;
+    padding: 12px 24px;
+    border: 2px solid #33383b;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: 0.2s;
+    margin-top: 20px;
+  }
+}
+
+.form {
+  margin-top: 20px;
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+}
+
+h1,
+h2,
+h3 {
+  color: var(--secondary-color);
+}
+
+.input,
+.select,
+.button {
+  margin: 10px 0;
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  background-color: white;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 3px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.error {
+  color: var(--error-color);
+  font-weight: bold;
+}
+
+.question {
+  background-color: white;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 3px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.footer {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--secondary-color);
+  display: flex;
+  justify-content: space-around;
+}
+
+// .messenger {
+//   display: flex;
+//   height: 90vh;
+// }
+
+.chats {
+  background: #fbfbfb;
+  padding: 10px;
+}
