@@ -17,11 +17,11 @@
 
 ### На веб-приложение:
 
-Netlify: https://messenger-praktikum-leriyyaa.netlify.app/
+Netlify: https://lera-middle-parktikum.netlify.app/
 
 ### На сверстанные макеты:
 
-находятся в футере
+находятся в футере https://lera-middle-parktikum.netlify.app/
 
 1. Логин
 2. Регистрация
