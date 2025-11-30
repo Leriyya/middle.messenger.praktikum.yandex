@@ -1,16 +1,17 @@
 <div class="pageContainer">
-  <div class="pageContent pageContent__profile">
-    {{> Avatar id="avatar" src="../../../public/dog.jpg"}}
+  <main class="pageContent pageContent__profile">
+    {{> Avatar id="avatar" src="../../../public/dog.jpg" alt="avatar"}}
     <h1>Лерия</h1>
     <form id="loginForm" class="form">
       {{> ProfileString id="email" name="Почта" value="bajieri@gmail.com"}}
       {{> ProfileString id="first_name" name="Имя" value="Валерия"}}
       {{> ProfileString id="second_name" name="Фамилия" value="Ехно"}}
-      {{> ProfileString id="display_name" name="Логин" value="Leriyyaa"}}
+      {{> ProfileString id="display_name" name="Ник" value="Leriyyaa"}}
+      {{> ProfileString id="login" name="Логин" value="Lera"}}
       {{> ProfileString id="phone" name="Номер телефона" value="+79786978375"}}
   
-      {{> Button id="enter" text="Редактировать"}}
+      {{> Button id="enter" text="Редактировать" type="submit"}}
     </form>
-  </div>
- {{> Footer}} 
+  </main>
+  {{> Footer}} 
  </div>

@@ -1,11 +1,3 @@
-:root {
-  --primary-color: #3369f3;
-  --secondary-color: #2c3e50;
-  --background-color: #f4f4f4;
-  --text-color: #333;
-  --error-color: #e74c3c;
-}
-
 *,
 *::before,
 *::after {
@@ -30,7 +22,7 @@ body {
   margin: 0 auto;
   border-radius: 20px;
   padding: 24px;
-  box-shadow: 0px 0px 6px 0px #00000024;
+  box-shadow: 0px 0px 6px 0px var(--shadow);
   min-height: 450px;
   width: 420px;
   display: flex;
@@ -62,20 +54,20 @@ body {
     font-size: 96px;
     margin: 0;
     font-weight: 700;
-    color: #222;
+    color: var(--text-color);
   }
 
   &__text {
     font-size: 20px;
     margin: 10px 0 20px;
-    color: #555;
+    color: var(--text-color-grey);
   }
 
   &__link {
     display: inline-block;
     padding: 12px 24px;
-    border: 2px solid #33383b;
-    color: #ffffff;
+    border: 2px solid var(--secondary-color);
+    color: var(--white);
     text-decoration: none;
     border-radius: 10px;
     transition: 0.2s;
@@ -114,11 +106,8 @@ ul {
 }
 
 li {
-  background-color: white;
-  margin: 10px 0;
-  padding: 10px;
   border-radius: 3px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  padding: 3px;
 }
 
 .error {
@@ -127,22 +116,13 @@ li {
 }
 
 .question {
-  background-color: white;
+  background-color: var(--white);
   padding: 15px;
   margin-bottom: 15px;
   border-radius: 3px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-}
-
-.footer {
-  margin-top: 20px;
-  padding-top: 20px;
-  border-top: 1px solid var(--secondary-color);
-  display: flex;
-  justify-content: space-around;
 }
 
 .chats {
-  background: #fbfbfb;
+  background: var(--light-white);
   padding: 10px;
 }

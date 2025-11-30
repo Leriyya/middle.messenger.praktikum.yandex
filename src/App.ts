@@ -67,7 +67,6 @@ export default class App {
 
     const html = template({});
 
-    // вместо innerHTML
     this.appElement.replaceChildren(this.stringToDOM(html));
 
     this.attachEventListeners();
@@ -80,11 +79,11 @@ export default class App {
       link.addEventListener("click", (e: Event) => {
         const target = e.target as HTMLElement | null;
 
-        const linkElement = target?.closest(
-          "[data-page]"
-        ) as HTMLElement | null;
+        if (!(target instanceof HTMLElement)) return;
 
-        if (!linkElement) return;
+        const linkElement = target?.closest("[data-page]");
+
+        if (!(linkElement instanceof HTMLElement)) return;
 
         e.preventDefault();
 
