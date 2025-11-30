@@ -2,10 +2,10 @@
   padding: 12px;
   display: flex;
   gap: 10px;
-  border-bottom: 1px solid #eaeaea;
+  border-bottom: 1px solid var(--light-white);
 
   &__img {
-    background-color: #efefef;
+    background-color: var(--light-white);
     border-radius: 50%;
     width: 47px;
     height: 47px;
@@ -17,8 +17,8 @@
 
   &__label {
     font-size: 11px;
-    background-color: #3369f3;
-    color: #fff;
+    background-color: var(--label-color);
+    color: var(--white);
     width: 20px;
     height: 20px;
     border-radius: 50%;
