@@ -1,4 +1,4 @@
-export { Login } from "./login";
+export { Signin } from "./signin";
 export { Signup } from "./signup";
 export { Profile } from "./profile";
 export { ProfileChange } from "./profileChange";

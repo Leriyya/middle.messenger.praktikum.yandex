@@ -1,3 +1,39 @@
+import Block from "../../framework/Block";
 import "./link.scss";
 
-export default `<a href="{{href}}" {{#if class}} class="{{class}} link"{{else}}class="link"{{/if}} data-page="{{data-page}}">{{text}}</a>`;
+export default class Link extends Block {
+  constructor(props: any) {
+    super({
+      ...props,
+      events: {
+        click: (e: Event) => {
+          e.preventDefault();
+          e.stopPropagation();
+
+          if (props.onClick) {
+            const page = this.props["data-page"];
+            props.onClick(e, page);
+          }
+
+          this.changeStyles();
+        },
+      },
+      attr: {
+        // class: "footer__link",
+      },
+    });
+  }
+
+  changeStyles() {}
+
+  override render() {
+    return `
+    <a href="{{href}}" 
+      {{#if class}} 
+      class="{{class}} 
+      link"{{else}}class="link"{{/if}} 
+      data-page="{{data-page}}">
+        {{text}}
+    </a>`;
+  }
+}
