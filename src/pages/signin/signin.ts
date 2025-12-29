@@ -108,8 +108,8 @@ export default class SigninPage extends Block {
 
   render() {
     return `
-      <div class="pageContainer">
-        <main class="pageContent">
+      <div class="page-container">
+        <main class="page-content">
           <h1>Вход</h1>
           <form id="loginForm" class="form">
             <div>

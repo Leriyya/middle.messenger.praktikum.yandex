@@ -22,9 +22,9 @@ export default class ProfileString extends Block {
 
   override render() {
     return `
-    <div id="{{id}}" class="profileString">
+    <div id="{{id}}" class="profile-string">
         <div>{{name}}</div>
-        <div class="profileString__value">{{value}}</div>
+        <div class="profile-string__value">{{value}}</div>
     </div>`;
   }
 }

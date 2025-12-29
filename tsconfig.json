@@ -8,7 +8,6 @@
     "skipLibCheck": true,
     "jsx": "react",
 
-    /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
@@ -19,7 +18,6 @@
     "strictNullChecks": true,
     "sourceMap": true,
 
-    /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,

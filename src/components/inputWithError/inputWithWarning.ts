@@ -30,7 +30,7 @@ export default class InputWithWarning extends Block {
         },
       }),
       attr: {
-        class: "inputWarning",
+        class: "input-warning",
       },
     });
   }
@@ -39,7 +39,7 @@ export default class InputWithWarning extends Block {
     const errorText = this.props.errorText;
 
     return ` 
-    <div class='inputWarning'>
+    <div class='input-warning'>
       <div>
         {{{ Input }}}
         <div class='inputWarning__text'>${errorText}</div>

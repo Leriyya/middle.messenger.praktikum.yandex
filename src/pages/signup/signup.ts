@@ -214,8 +214,8 @@ export default class SignupPage extends Block {
 
   override render() {
     return `
-    <div class="pageContainer">
-      <main class="pageContent">
+    <div class="page-container">
+      <main class="page-content">
         <h1>Регистрация</h1>
         <form id="loginForm" class="form">
           {{{ InputFirstName }}}

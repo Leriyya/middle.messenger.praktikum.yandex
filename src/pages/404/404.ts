@@ -16,7 +16,7 @@ export default class Page404 extends Block {
       href: "#",
       datapage: "profile",
       text: "Вернуться в профиль",
-      class: "containerError__link",
+      class: "container-error__link",
       onClick: (event: Event) => {
         event.preventDefault();
         this.props.changePage("profile");
@@ -32,11 +32,11 @@ export default class Page404 extends Block {
 
   override render() {
     return `
-    <div class="pageContainer">
-        <main class="pageCenter">
-            <div class="containerError">
-                <h1 class="containerError__title">404</h1>
-                <p class="containerError__text">Страница не найдена</p>
+    <div class="page-container">
+        <main class="page-center">
+            <div class="container-error">
+                <h1 class="container-error__title">404</h1>
+                <p class="container-error__text">Страница не найдена</p>
                 {{{ LinkBack }}}
             </div>
         </main>

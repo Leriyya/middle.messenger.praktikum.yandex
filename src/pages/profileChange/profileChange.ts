@@ -206,8 +206,8 @@ export default class ProfileChangePage extends Block {
 
   render() {
     return `
-    <div class="pageContainer">
-      <main class="pageContent pageContent__profile">
+    <div class="page-container">
+      <main class="page-content page-content__profile">
         {{{ ProfileChangeAvatar }}}
         <form id="profileForm" class="form">
           <div>
