@@ -42,7 +42,7 @@ export default class InputWithWarning extends Block {
     <div class='input-warning'>
       <div>
         {{{ Input }}}
-        <div class='inputWarning__text'>${errorText}</div>
+        <div class='input-warning__text'>${errorText}</div>
       </div>   
     </div>
     `;
