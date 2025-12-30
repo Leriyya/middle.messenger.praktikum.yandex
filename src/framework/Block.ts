@@ -6,6 +6,7 @@ interface BlockProps {
   [key: string]: any;
 }
 
+export type EventsMap = Record<string, EventListener>;
 export default class Block {
   static EVENTS = {
     INIT: "init",
@@ -21,7 +22,7 @@ export default class Block {
 
   protected children: Record<string, Block>;
 
-  protected lists: Record<string, any[]>;
+  protected lists: Record<string, unknown[]>;
 
   protected eventBus: () => EventBus;
 
@@ -38,11 +39,23 @@ export default class Block {
   }
 
   private _addEvents(): void {
+    const { events } = this.props;
+    if (!events || typeof events !== "object") {
+      return;
+    }
+    Object.entries(events as EventsMap).forEach(([eventName, handler]) => {
+      this._element?.addEventListener(eventName, handler);
+    });
+  }
+
+  private _removeEvents(): void {
     const { events = {} } = this.props;
-    Object.keys(events).forEach((eventName) => {
-      if (this._element) {
-        this._element.addEventListener(eventName, events[eventName]);
-      }
+
+    if (!events || typeof events !== "object") {
+      return;
+    }
+    Object.entries(events as EventsMap).forEach(([eventName, handler]) => {
+      this._element?.removeEventListener(eventName, handler);
     });
   }
 
@@ -102,11 +115,11 @@ export default class Block {
   private _getChildrenPropsAndProps(propsAndChildren: BlockProps): {
     children: Record<string, Block>;
     props: BlockProps;
-    lists: Record<string, any[]>;
+    lists: Record<string, unknown[]>;
   } {
     const children: Record<string, Block> = {};
     const props: BlockProps = {};
-    const lists: Record<string, any[]> = {};
+    const lists: Record<string, unknown[]> = {};
 
     Object.entries(propsAndChildren).forEach(([key, value]) => {
       if (value instanceof Block) {
@@ -123,7 +136,11 @@ export default class Block {
   }
 
   protected addAttributes(): void {
-    const { attr = {} } = this.props;
+    const { attr } = this.props;
+
+    if (!attr || typeof attr !== "object") {
+      return;
+    }
 
     Object.entries(attr).forEach(([key, value]) => {
       if (this._element) {
@@ -132,7 +149,7 @@ export default class Block {
     });
   }
 
-  protected setAttributes(attr: any): void {
+  protected setAttributes(attr: Record<string, string>): void {
     Object.entries(attr).forEach(([key, value]) => {
       if (this._element) {
         this._element.setAttribute(key, value as string);
@@ -148,7 +165,7 @@ export default class Block {
     Object.assign(this.props, nextProps);
   };
 
-  public setLists = (nextList: Record<string, any[]>): void => {
+  public setLists = (nextList: Record<string, unknown[]>): void => {
     if (!nextList) {
       return;
     }
@@ -198,6 +215,7 @@ export default class Block {
 
     const newElement = fragment.content.firstElementChild as HTMLElement;
     if (this._element && newElement) {
+      this._removeEvents();
       this._element.replaceWith(newElement);
     }
     this._element = newElement;
@@ -216,18 +234,21 @@ export default class Block {
     return this._element;
   }
 
-  private _makePropsProxy(props: any): any {
+  private _makePropsProxy<T extends Record<string, unknown>>(props: T): T {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this;
 
     return new Proxy(props, {
-      get(target: any, prop: string) {
+      get(target, prop: string) {
         const value = target[prop];
         return typeof value === "function" ? value.bind(target) : value;
       },
-      set(target: any, prop: string, value: any) {
+      set(target, prop, value, receiver) {
+        if (typeof prop === "symbol") {
+          return Reflect.set(target, prop, value, receiver);
+        }
         const oldTarget = { ...target };
-        target[prop] = value;
+        (target as Record<string, unknown>)[prop] = value;
         self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
         return true;
       },

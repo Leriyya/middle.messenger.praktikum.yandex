@@ -21,7 +21,7 @@ export default class Footer extends Block {
       }),
       LinkLogin: new Link({
         href: "#",
-        datapage: "signin",
+        "data-page": "signin",
         text: "Вход",
         class: "footer__link",
         onClick: (event: Event) => {
@@ -31,7 +31,7 @@ export default class Footer extends Block {
       }),
       LinkProfile: new Link({
         href: "#",
-        datapage: "profile",
+        "data-page": "profile",
         text: "В профиль",
         class: "footer__link",
         onClick: (event: Event) => {
@@ -41,7 +41,7 @@ export default class Footer extends Block {
       }),
       LinkProfileChange: new Link({
         href: "#",
-        datapage: "profileChange",
+        "data-page": "profileChange",
         text: "Редактировать профиль",
         class: "footer__link",
         onClick: (event: Event) => {
@@ -51,7 +51,7 @@ export default class Footer extends Block {
       }),
       LinkProfileChangePassword: new Link({
         href: "#",
-        datapage: "profileChangePassword",
+        "data-page": "profileChangePassword",
         text: "Изменить пароль",
         class: "footer__link",
         onClick: (event: Event) => {
@@ -61,7 +61,7 @@ export default class Footer extends Block {
       }),
       LinkMessenger: new Link({
         href: "#",
-        datapage: "messenger",
+        "data-page": "messenger",
         text: "К чатам",
         class: "footer__link",
         onClick: (event: Event) => {
@@ -71,7 +71,7 @@ export default class Footer extends Block {
       }),
       Link404: new Link({
         href: "#",
-        datapage: "404",
+        "data-page": "404",
         text: "404",
         class: "footer__link",
         onClick: (event: Event) => {
@@ -81,7 +81,7 @@ export default class Footer extends Block {
       }),
       Link500: new Link({
         href: "#",
-        datapage: "500",
+        "data-page": "500",
         text: "500",
         class: "footer__link",
         onClick: (event: Event) => {

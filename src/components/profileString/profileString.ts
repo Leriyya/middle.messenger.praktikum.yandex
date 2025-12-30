@@ -15,7 +15,7 @@ export default class ProfileString extends Block {
       ...props,
 
       attr: {
-        class: "profileString",
+        class: "profile-string",
       },
     });
   }
