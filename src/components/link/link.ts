@@ -1,8 +1,16 @@
+import type { Page } from "../../App";
 import Block from "../../framework/Block";
 import "./link.scss";
 
+interface LinkProps {
+  onClick: (e: Event, page: Page) => void;
+  href?: string;
+  "data-page"?: string;
+  text: string;
+  class?: string;
+}
 export default class Link extends Block {
-  constructor(props: any) {
+  constructor(props: LinkProps) {
     super({
       ...props,
       events: {

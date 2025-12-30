@@ -209,7 +209,7 @@ export default class ProfileChangePage extends Block {
     <div class="page-container">
       <main class="page-content page-content__profile">
         {{{ ProfileChangeAvatar }}}
-        <form id="profileForm" class="form">
+        <form id="profile-form" class="form">
           <div>
             {{{ InputFirstName }}}
             {{{ InputSecondName }}}

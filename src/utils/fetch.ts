@@ -3,7 +3,7 @@
 // interface HTTPOptions {
 //   headers?: Record<string, string>;
 //   method?: HTTPMethod;
-//   data?: any;
+//   data?: unknown;
 //   timeout?: number;
 // }
 
@@ -14,7 +14,7 @@
 //   DELETE: "DELETE",
 // };
 
-// function queryStringify(data: Record<string, any>): string {
+// function queryStringify(data: Record<string, unknown>): string {
 //   if (typeof data !== "object") {
 //     throw new Error("Data must be object");
 //   }

@@ -16,7 +16,7 @@ export default class Page500 extends Block {
   init() {
     const LinkBack = new Link({
       href: "#",
-      datapage: "profile",
+      "data-page": "profile",
       text: "Вернуться в профиль",
       class: "container-error__link",
       onClick: (event: Event) => {

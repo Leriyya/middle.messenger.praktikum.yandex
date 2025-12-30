@@ -52,7 +52,7 @@ export default class MessengerPage extends Block {
     });
     const LinkBack = new Link({
       href: "#",
-      datapage: "profile",
+      "data-page": "profile",
       text: "Вернуться в профиль",
       class: "messenger__back",
       onClick: (event: Event) => {
