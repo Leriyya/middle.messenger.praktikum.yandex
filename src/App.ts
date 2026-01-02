@@ -1,24 +1,13 @@
-import Handlebars from "handlebars";
-import * as Pages from "./pages";
+import SigninPage from "./pages/signin/signin";
+import SignupPage from "./pages/signup/signup";
+import MessengerPage from "./pages/messenger/messenger";
+import ProfilePage from "./pages/profile/profile";
+import ProfileChangePage from "./pages/profileChange/profileChange";
+import ProfileChangePasswordPage from "./pages/profileChangePassword/profileChangePassword";
+import { Page404, Page500 } from "./pages";
 
-import { Input } from "./components/input";
-import { Button } from "./components/button";
-import { Link } from "./components/link";
-import { ProfileString } from "./components/profileString";
-import { Avatar } from "./components/avatar";
-import { Chat } from "./components/chat";
-import { Footer } from "./components/footer";
-
-Handlebars.registerPartial("Input", Input);
-Handlebars.registerPartial("Button", Button);
-Handlebars.registerPartial("Link", Link);
-Handlebars.registerPartial("ProfileString", ProfileString);
-Handlebars.registerPartial("Avatar", Avatar);
-Handlebars.registerPartial("Chat", Chat);
-Handlebars.registerPartial("Footer", Footer);
-
-type Page =
-  | "login"
+export type Page =
+  | "signin"
   | "signup"
   | "profile"
   | "profileChange"
@@ -31,26 +20,16 @@ interface AppState {
   currentPage: Page;
 }
 
-const PAGES_MAP: Record<Page, string> = {
-  login: Pages.Login,
-  signup: Pages.Signup,
-  profile: Pages.Profile,
-  profileChange: Pages.ProfileChange,
-  profileChangePassword: Pages.ProfileChangePassword,
-  messenger: Pages.Messenger,
-  "404": Pages.Page404,
-  "500": Pages.Page500,
-};
-
 export default class App {
   private state: AppState;
   private appElement: HTMLElement | null;
 
   constructor() {
     this.state = {
-      currentPage: "login",
+      currentPage: "signin",
     };
     this.appElement = document.getElementById("app");
+    this.changePage = this.changePage.bind(this);
   }
 
   stringToDOM(html: string): DocumentFragment {
@@ -59,44 +38,52 @@ export default class App {
     return template.content;
   }
 
-  render() {
-    if (!this.appElement) return;
-
-    const templateString = PAGES_MAP[this.state.currentPage];
-    const template = Handlebars.compile(templateString);
-
-    const html = template({});
-
-    this.appElement.replaceChildren(this.stringToDOM(html));
-
-    this.attachEventListeners();
-  }
-
-  attachEventListeners() {
-    const footerLinks = document.querySelectorAll("[data-page]");
-
-    footerLinks.forEach((link) => {
-      link.addEventListener("click", (e: Event) => {
-        const target = e.target as HTMLElement | null;
-
-        if (!(target instanceof HTMLElement)) return;
-
-        const linkElement = target?.closest("[data-page]");
-
-        if (!(linkElement instanceof HTMLElement)) return;
-
-        e.preventDefault();
-
-        const page = linkElement.dataset.page;
-        if (page) {
-          this.changePage(page);
-        }
-      });
-    });
-  }
-
-  changePage(page: any) {
+  public changePage(page: Page) {
     this.state.currentPage = page;
     this.render();
+  }
+
+  render(): string {
+    if (!this.appElement) {
+      this.appElement = document.getElementById("app");
+      if (!this.appElement) {
+        console.error("App element not found");
+        return "";
+      }
+    }
+
+    const props = {
+      _app: this,
+      changePage: this.changePage.bind(this),
+    };
+
+    let pageInstance;
+
+    if (this.state.currentPage === "signin") {
+      pageInstance = new SigninPage(props);
+    } else if (this.state.currentPage === "signup") {
+      pageInstance = new SignupPage(props);
+    } else if (this.state.currentPage === "messenger") {
+      pageInstance = new MessengerPage(props);
+    } else if (this.state.currentPage === "profile") {
+      pageInstance = new ProfilePage(props);
+    } else if (this.state.currentPage === "profileChange") {
+      pageInstance = new ProfileChangePage(props);
+    } else if (this.state.currentPage === "profileChangePassword") {
+      pageInstance = new ProfileChangePasswordPage(props);
+    } else if (this.state.currentPage === "404") {
+      pageInstance = new Page404(props);
+    } else if (this.state.currentPage === "500") {
+      pageInstance = new Page500(props);
+    }
+
+    if (pageInstance) {
+      const content = pageInstance.getContent();
+
+      this.appElement.innerHTML = "";
+      this.appElement.appendChild(content);
+    }
+
+    return "";
   }
 }

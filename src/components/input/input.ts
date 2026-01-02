@@ -1,3 +1,45 @@
+import Block from "../../framework/Block";
 import "./input.scss";
 
-export default `<input id="{{id}}" name="{{name}}" type="{{type}}" placeholder="{{placeholder}}" value="{{value}}" class="input">`;
+interface InputProps {
+  type: string;
+  name: string;
+  class?: string;
+  placeholder: string;
+  required?: boolean;
+  errorText?: string;
+  value?: string;
+  event: {
+    onBlur: (e: Event) => void;
+  };
+}
+
+export default class Input extends Block {
+  constructor(props: InputProps) {
+    super({
+      ...props,
+      events: {
+        blur: (e: Event) => {
+          props.event?.onBlur(e);
+        },
+      },
+      attr: {
+        class: "input",
+      },
+    });
+  }
+
+  override render(): string {
+    return `
+          <input
+            class="{{ class }}"
+            placeholder="{{ placeholder }}"
+            type="{{ type }}"
+            title="{{ title }}"
+            name="{{ name }}"
+            value="{{ value }}"
+            required="{{ required }}"
+          />      
+    `;
+  }
+}
