@@ -2,35 +2,29 @@
   position: fixed;
   inset: 0;
   z-index: 1000;
-
   display: flex;
   align-items: center;
   justify-content: center;
-}
 
-.modal__overlay {
-  position: absolute;
-  inset: 0;
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+  }
 
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(2px);
-}
-
-.modal__content {
-  position: relative;
-  z-index: 1;
-
-  min-width: 320px;
-  max-width: 90vw;
-  max-height: 90vh;
-
-  padding: 24px;
-  background: var(--white);
-  border-radius: 12px;
-
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-
-  animation: modalFadeIn 0.25s ease-out;
+  &__content {
+    position: relative;
+    z-index: 1;
+    min-width: 320px;
+    max-width: 90vw;
+    max-height: 90vh;
+    padding: 24px;
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    animation: modalFadeIn 0.25s ease-out;
+  }
 }
 
 @keyframes modalFadeIn {

@@ -24,13 +24,13 @@ export default class ChatMessages extends Block {
     const messages = this.props.messages ?? [];
 
     return `
-      <div class="chatMes">
+      <div class="chatmes">
         ${messages
           .map(
             (msg: any) => `
-          <div class="chatMes__message">
-            <div class="chatMes__message-content">${msg.content}</div>
-            <div class="chatMes__message-time">
+          <div class="chatmes__message">
+            <div class="chatmes__message-content">${msg.content}</div>
+            <div class="chatmes__message-time">
             ${formatTime(msg.time)}
             </div>
           </div>
