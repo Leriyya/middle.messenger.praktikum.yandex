@@ -1,38 +1,47 @@
+import { resourcesUrl } from "../../api/base-api";
 import type { Page } from "../../App";
 import { Avatar } from "../../components/avatar";
 import { Button } from "../../components/button";
 import Footer from "../../components/footer/footer";
 import InputWithWarning from "../../components/inputWithError/inputWithWarning";
-import Block from "../../framework/Block";
+import { UserController } from "../../controllers/user-profile";
+import { withUser } from "../../store/hoc";
+import Block from "../../utils/Block";
 import { validatePassword } from "../../utils/validators";
 
 interface ProfileChangePasswordPageProps {
   changePage: (page: Page) => void;
 }
 
-export default class ProfileChangePasswordPage extends Block {
+class ProfileChangePasswordPage extends Block {
+  private profileChangePasswordController: UserController;
+
   constructor(props: ProfileChangePasswordPageProps) {
     super({ ...props });
+    this.profileChangePasswordController = new UserController();
   }
 
   init() {
-    const changePage = this.props.changePage;
+    const avatarSrc = this.props.user?.avatar
+      ? `${resourcesUrl}${this.props.user.avatar}`
+      : "/public/default-avatar.png";
+
+    const userController = new UserController();
+
     const onChangeOldPasswordBind = this.onChangeOldPassword.bind(this);
     const onChangeNewPasswordBind = this.onChangeNewPassword.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
-    this.props = {
+    this.setProps({
       events: {
         submit: this.onSubmit,
       },
-    };
-
-    const ProfileChangeFooter = new Footer({
-      changePage: changePage,
     });
+
+    const ProfileChangeFooter = new Footer();
     const ProfileChangeAvatar = new Avatar({
       id: "avatar",
-      src: "../../../public/dog.jpg",
+      src: avatarSrc,
       alt: "avatar",
     });
     const ProfileChangePasswordButton = new Button({
@@ -66,6 +75,8 @@ export default class ProfileChangePasswordPage extends Block {
       InputOldPassword,
       InputNewPassword,
     };
+
+    userController.fetchUser();
     super.init();
   }
 
@@ -103,12 +114,25 @@ export default class ProfileChangePasswordPage extends Block {
       return;
     }
     const formData = new FormData(e.target);
-    const data: { [key: string]: FormDataEntryValue } = {};
+    const data = {
+      oldPassword: formData.get("oldPassword") as string,
+      newPassword: formData.get("newPassword") as string,
+    };
 
-    formData.forEach((value, key) => {
-      data[key] = value;
-    });
+    this.profileChangePasswordController.changePassword(data);
     console.log("profile change password data:", data);
+  }
+
+  protected componentDidUpdate(oldProps: any, newProps: any): boolean {
+    if (oldProps.user !== newProps.user && newProps.user) {
+      this.children.ProfileChangeAvatar.setProps({
+        src: newProps.user?.avatar
+          ? `${resourcesUrl}${newProps.user.avatar}`
+          : "/public/default-avatar.png",
+      });
+    }
+
+    return false;
   }
 
   render() {
@@ -129,3 +153,5 @@ export default class ProfileChangePasswordPage extends Block {
     `;
   }
 }
+
+export default withUser(ProfileChangePasswordPage);

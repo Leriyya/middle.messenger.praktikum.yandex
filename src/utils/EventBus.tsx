@@ -25,9 +25,9 @@ export default class EventBus {
     );
   }
 
-  public emit(event: string, ...args: unknown[]): void {
+  public emit(event: string, ...args: unknown[]) {
     if (!this.listeners[event]) {
-      throw new Error(`No event: ${event}`);
+      return;
     }
 
     this.listeners[event].forEach((listener) => {

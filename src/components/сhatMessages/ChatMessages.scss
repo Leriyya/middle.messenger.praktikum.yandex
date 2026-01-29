@@ -1,0 +1,13 @@
+.chatMes {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  &__message {
+    width: 50%;
+    background-color: var(--white);
+    border-radius: 20px;
+    padding: 5px 15px;
+  }
+}

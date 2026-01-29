@@ -13,7 +13,7 @@ body {
 
 .page-container {
   min-height: 100vh;
-  display: flex;
+  display: flex !important;
   flex-direction: column;
   padding-top: 40px;
 }
@@ -83,6 +83,22 @@ body {
   flex-direction: column;
   justify-content: space-between;
   text-align: center;
+
+  &__error {
+    font-size: 11px;
+    color: #d13e3e;
+    text-align: left;
+    line-height: 14px;
+  }
+}
+
+.logout {
+  button {
+    position: absolute;
+    right: 20px;
+    width: 100px;
+    top: 0;
+  }
 }
 
 h1,
