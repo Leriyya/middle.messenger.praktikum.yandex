@@ -9,7 +9,7 @@
   &__overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgb(0 0 0 / 50%);
     backdrop-filter: blur(2px);
   }
 
@@ -22,15 +22,16 @@
     padding: 24px;
     background: var(--white);
     border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-    animation: modalFadeIn 0.25s ease-out;
+    box-shadow: 0 10px 25px rgb(0 0 0 / 15%);
+    animation: modal-fade-in 0.25s ease-out;
   }
 }
 
-@keyframes modalFadeIn {
+@keyframes modal-fade-in {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
