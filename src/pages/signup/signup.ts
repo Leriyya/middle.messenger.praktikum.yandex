@@ -2,7 +2,8 @@ import type { Page } from "../../App";
 import { Button } from "../../components/button";
 import Footer from "../../components/footer/footer";
 import InputWithWarning from "../../components/inputWithError/inputWithWarning";
-import Block from "../../framework/Block";
+import { UserSignupController } from "../../controllers/user-signup";
+import Block from "../../utils/Block";
 import {
   validateEmail,
   validateLogin,
@@ -16,14 +17,16 @@ interface SignupPageProps {
 }
 
 export default class SignupPage extends Block {
+  private signupController: UserSignupController;
+
   constructor(props: SignupPageProps) {
     super({
       ...props,
     });
+    this.signupController = new UserSignupController();
   }
 
   init() {
-    const changePage = this.props.changePage;
     const onChangeFirstNameBind = this.onChangeFirstName.bind(this);
     const onChangeSecondNameBind = this.onChangeSecondName.bind(this);
     const onChangeLoginBind = this.onChangeLogin.bind(this);
@@ -38,9 +41,7 @@ export default class SignupPage extends Block {
       },
     };
 
-    const SignupFooter = new Footer({
-      changePage: changePage,
-    });
+    const SignupFooter = new Footer();
     const SignupButton = new Button({
       text: "Зарегистрироваться",
       id: "enter",
@@ -204,12 +205,18 @@ export default class SignupPage extends Block {
       return;
     }
     const formData = new FormData(e.target);
-    const data: { [key: string]: FormDataEntryValue } = {};
 
-    formData.forEach((value, key) => {
-      data[key] = value;
-    });
+    const data = {
+      login: formData.get("login") as string,
+      password: formData.get("password") as string,
+      first_name: formData.get("first_name") as string,
+      email: formData.get("email") as string,
+      second_name: formData.get("second_name") as string,
+      phone: formData.get("phone") as string,
+    };
+
     console.log("register data:", data);
+    this.signupController.login(data);
   }
 
   override render() {

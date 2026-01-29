@@ -18,7 +18,7 @@
   "rules": {
     "no-unused-vars": "off",
     "@typescript-eslint/no-explicit-any": "off",
-    "indent": ["error", 2],
+    "indent": "off",
     "linebreak-style": ["error", "unix"],
     "quotes": ["error", "double"],
     "semi": ["error", "always"],
@@ -31,6 +31,7 @@
       {
         "code": 120
       }
-    ]
+    ],
+    "operator-linebreak": "off"
   }
 }

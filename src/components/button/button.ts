@@ -1,4 +1,4 @@
-import Block from "../../framework/Block";
+import Block from "../../utils/Block";
 import "./button.scss";
 
 interface ButtonProps {
@@ -16,7 +16,6 @@ export default class Button extends Block {
       ...props,
       events: {
         click: (e: Event) => {
-          this.changeStyles();
           props.onClick(e);
         },
       },
@@ -24,14 +23,6 @@ export default class Button extends Block {
         class: combinedClass,
       },
     });
-  }
-
-  changeStyles() {
-    // this.setProps({
-    //   attr: {
-    //     class: "",
-    //   },
-    // });
   }
 
   override render() {

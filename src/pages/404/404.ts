@@ -1,6 +1,6 @@
 import type { Page } from "../../App";
 import { Link } from "../../components/link";
-import Block from "../../framework/Block";
+import Block from "../../utils/Block";
 
 interface Page404Props {
   changePage: (page: Page) => void;
@@ -13,14 +13,10 @@ export default class Page404 extends Block {
 
   init() {
     const LinkBack = new Link({
-      href: "#",
+      href: "/profile",
       "data-page": "profile",
       text: "Вернуться в профиль",
       class: "container-error__link",
-      onClick: (event: Event) => {
-        event.preventDefault();
-        this.props.changePage("profile");
-      },
     });
 
     this.children = {

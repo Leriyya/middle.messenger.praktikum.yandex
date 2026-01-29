@@ -1,93 +1,57 @@
-import type { Page } from "../../App";
-import Block from "../../framework/Block";
+import Block from "../../utils/Block";
 import { Link } from "../link";
 import "./footer.scss";
 
-interface FooterProps {
-  changePage: (page: Page) => void;
-}
 export default class Footer extends Block {
-  constructor(props: FooterProps) {
+  constructor() {
     super({
       LinkSignin: new Link({
-        href: "#",
+        href: "/signup",
         "data-page": "signup",
         text: "Ещё не зарегистрированы?",
         class: "footer__link",
-        onClick: (event: Event) => {
-          event.preventDefault();
-          props.changePage("signup");
-        },
       }),
       LinkLogin: new Link({
-        href: "#",
+        href: "/signin",
         "data-page": "signin",
         text: "Вход",
         class: "footer__link",
-        onClick: (event: Event) => {
-          event.preventDefault();
-          props.changePage("signin");
-        },
       }),
       LinkProfile: new Link({
-        href: "#",
+        href: "/profile",
         "data-page": "profile",
         text: "В профиль",
         class: "footer__link",
-        onClick: (event: Event) => {
-          event.preventDefault();
-          props.changePage("profile");
-        },
       }),
       LinkProfileChange: new Link({
-        href: "#",
+        href: "/profileChange",
         "data-page": "profileChange",
         text: "Редактировать профиль",
         class: "footer__link",
-        onClick: (event: Event) => {
-          event.preventDefault();
-          props.changePage("profileChange");
-        },
       }),
       LinkProfileChangePassword: new Link({
-        href: "#",
+        href: "/profileChangePassword",
         "data-page": "profileChangePassword",
         text: "Изменить пароль",
         class: "footer__link",
-        onClick: (event: Event) => {
-          event.preventDefault();
-          props.changePage("profileChangePassword");
-        },
       }),
       LinkMessenger: new Link({
-        href: "#",
+        href: "/messenger",
         "data-page": "messenger",
         text: "К чатам",
         class: "footer__link",
-        onClick: (event: Event) => {
-          event.preventDefault();
-          props.changePage("messenger");
-        },
       }),
       Link404: new Link({
-        href: "#",
+        href: "/404",
         "data-page": "404",
         text: "404",
         class: "footer__link",
-        onClick: (event: Event) => {
-          event.preventDefault();
-          props.changePage("404");
-        },
       }),
       Link500: new Link({
-        href: "#",
+        href: "/500",
         "data-page": "500",
         text: "500",
         class: "footer__link",
-        onClick: (event: Event) => {
-          event.preventDefault();
-          props.changePage("500");
-        },
       }),
     });
   }
