@@ -1,9 +1,11 @@
 import { resourcesUrl } from "../../api/base-api";
+import type { UserProfileRequest } from "../../api/user-api";
 import type { Page } from "../../App";
 import { Avatar } from "../../components/avatar";
 import { Button } from "../../components/button";
 import Footer from "../../components/footer/footer";
 import { ProfileString } from "../../components/profileString";
+import { UserLogoutController } from "../../controllers/user-logout";
 import { UserController } from "../../controllers/user-profile";
 import { withUser } from "../../store/hoc";
 import Block from "../../utils/Block";
@@ -11,11 +13,15 @@ import { Router } from "../../utils/router";
 
 interface ProfilePageProps {
   changePage: (page: Page) => void;
+  user?: UserProfileRequest;
 }
 
 class ProfilePage extends Block {
+  private logoutController: UserLogoutController;
+
   constructor(props: ProfilePageProps) {
     super({ ...props });
+    this.logoutController = new UserLogoutController();
   }
 
   init() {
@@ -40,6 +46,17 @@ class ProfilePage extends Block {
         console.log("go edit");
         event.preventDefault();
         router.go("/profileChange");
+      },
+    });
+    const ExitButton = new Button({
+      text: "Выйти",
+      id: "exit",
+      type: "button",
+      onClick: (event: Event) => {
+        console.log("exit");
+        event.preventDefault();
+        this.onLogout();
+        router.go("/signin");
       },
     });
     const EmailField = new ProfileString({
@@ -78,6 +95,7 @@ class ProfilePage extends Block {
       ProfileFooter,
       ProfileChangeAvatar,
       ProfileButton,
+      ExitButton,
       EmailField,
       FirstNameField,
       SecondNameField,
@@ -91,7 +109,10 @@ class ProfilePage extends Block {
     super.init();
   }
 
-  protected componentDidUpdate(oldProps: any, newProps: any): any {
+  protected componentDidUpdate(
+    oldProps: ProfilePageProps,
+    newProps: ProfilePageProps
+  ): boolean {
     if (oldProps.user !== newProps.user) {
       this.children.ProfileChangeAvatar.setProps({
         src: newProps.user?.avatar
@@ -127,6 +148,17 @@ class ProfilePage extends Block {
     return false;
   }
 
+  async onLogout() {
+    try {
+      await this.logoutController.logout();
+      this.setProps({
+        errorText: "",
+      });
+    } catch (error) {
+      console.log("logout error", error, this.props);
+    }
+  }
+
   render() {
     return `
     <div class="page-container">
@@ -142,6 +174,7 @@ class ProfilePage extends Block {
           {{{ PhoneField }}}
     
           {{{ ProfileButton }}}
+          {{{ ExitButton }}}
         </form>
       </main>
       {{{ ProfileFooter }}}

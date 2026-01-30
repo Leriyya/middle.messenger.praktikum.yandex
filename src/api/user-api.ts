@@ -8,6 +8,7 @@ export interface UserProfileRequest {
   email: string;
   display_name: string;
   phone: string;
+  avatar?: string;
 }
 
 export interface UserProfileChangeRequest {
@@ -20,7 +21,7 @@ export interface UserProfileChangeRequest {
 }
 
 export interface UserProfileAvatarRequest {
-  avatar: any;
+  avatar: string;
 }
 
 export interface UserProfileChangePasswordRequest {

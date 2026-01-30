@@ -2,6 +2,7 @@ import type { Page } from "../../App";
 import { Button } from "../../components/button";
 import Footer from "../../components/footer/footer";
 import InputWithWarning from "../../components/inputWithError/inputWithWarning";
+import { ChatsController } from "../../controllers/chats";
 import { UserLoginController } from "../../controllers/user-login";
 import { UserLogoutController } from "../../controllers/user-logout";
 import Block from "../../utils/Block";
@@ -15,11 +16,13 @@ interface SigninPageProps {
 export default class SigninPage extends Block {
   private loginController: UserLoginController;
   private logoutController: UserLogoutController;
+  private chatsController: ChatsController;
 
   constructor(props: SigninPageProps) {
     super({ ...props });
     this.loginController = new UserLoginController();
     this.logoutController = new UserLogoutController();
+    this.chatsController = new ChatsController();
   }
 
   init() {
@@ -121,6 +124,7 @@ export default class SigninPage extends Block {
 
     try {
       await this.loginController.login(data);
+      await this.chatsController.fetchChats();
     } catch (error) {
       console.log("error", error, this.props);
 

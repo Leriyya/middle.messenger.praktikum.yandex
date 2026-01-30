@@ -1,4 +1,5 @@
 import { resourcesUrl } from "../../api/base-api";
+import type { UserProfileRequest } from "../../api/user-api";
 import type { Page } from "../../App";
 import { Avatar } from "../../components/avatar";
 import { Button } from "../../components/button";
@@ -16,6 +17,7 @@ import {
 
 interface ProfileChangePageProps {
   changePage: (page: Page) => void;
+  user?: UserProfileRequest;
 }
 
 class ProfileChangePage extends Block {
@@ -220,7 +222,10 @@ class ProfileChangePage extends Block {
     this.profileChangeController.updateProfile(data);
   }
 
-  protected componentDidUpdate(oldProps: any, newProps: any): boolean {
+  protected componentDidUpdate(
+    oldProps: ProfileChangePageProps,
+    newProps: ProfileChangePageProps
+  ): boolean {
     if (oldProps.user !== newProps.user && newProps.user) {
       this.children.ProfileChangeAvatar.setProps({
         src: newProps.user?.avatar

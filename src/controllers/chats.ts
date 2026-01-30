@@ -9,6 +9,17 @@ import { WSTransport, WSTransportEvents } from "../utils/WSTransport";
 
 const chatsApi = new ChatsAPI();
 
+export interface WSMessage {
+  id: number;
+  user_id: number;
+  chat_id: number;
+  type: string;
+  time: string;
+  content: string;
+  is_read?: boolean;
+  file?: unknown;
+}
+
 export class ChatsController {
   private ws: WSTransport | null = null;
 
@@ -65,8 +76,10 @@ export class ChatsController {
     });
   }
 
-  onMessage(cb: (data: any) => void) {
-    this.ws?.on(WSTransportEvents.Message, cb);
+  onMessage(cb: (data: WSMessage | WSMessage[]) => void) {
+    this.ws?.on(WSTransportEvents.Message, (data: unknown) => {
+      cb(data as WSMessage | WSMessage[]);
+    });
   }
 
   close() {

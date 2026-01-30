@@ -70,9 +70,9 @@ export class WSTransport extends EventBus {
     socket.addEventListener("error", (e: Event) => {
       this.emit(WSTransportEvents.Error, e);
     });
-    socket.addEventListener("message", (message: MessageEvent<any>) => {
+    socket.addEventListener("message", (message: MessageEvent<unknown>) => {
       try {
-        const data = JSON.parse(message.data);
+        const data = JSON.parse(String(message.data));
 
         if (["pong", "user connected"].includes(data?.type)) {
           return;
