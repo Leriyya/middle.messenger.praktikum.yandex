@@ -1,8 +1,20 @@
 import Block from "../../utils/Block";
 import ChatItem from "../chatItem/chatItem";
 
+interface LastMessage {
+  content: string;
+  time: string;
+}
+export interface Chat {
+  id: string;
+  title: string;
+  avatar?: string | null;
+  last_message?: LastMessage | null;
+  unread_count?: string;
+}
+
 interface ChatsListProps {
-  chats?: any[];
+  chats?: Chat[];
   onDelete?: (chatId: string) => void;
   onChatClick?: (chatId: string) => void;
 }
@@ -13,16 +25,16 @@ class ChatsList extends Block {
     this.initChildren(props.chats);
   }
 
-  private initChildren(chats?: any[]) {
+  private initChildren(chats?: Chat[]) {
     if (!chats) return;
 
     const chatItems: Record<string, Block> = {};
     chats.forEach((chat, index) => {
       chatItems[`chat_${index}`] = new ChatItem({
         id: chat.id,
-        src: chat.avatar ?
-          `https://ya-praktikum.tech/api/v2/resources${chat.avatar}` :
-          "../../../public/user.svg",
+        src: chat.avatar
+          ? `https://ya-praktikum.tech/api/v2/resources${chat.avatar}`
+          : "../../../public/user.svg",
         title: chat.title,
         message: chat.last_message?.content ?? "",
         time: chat.last_message?.time ?? "",
@@ -48,8 +60,8 @@ class ChatsList extends Block {
     return `
       <div class="messenger__chat-list">
         ${Object.keys(this.children)
-        .map((key) => `{{{ ${key} }}}`)
-        .join("")}
+          .map((key) => `{{{ ${key} }}}`)
+          .join("")}
       </div>
     `;
   }

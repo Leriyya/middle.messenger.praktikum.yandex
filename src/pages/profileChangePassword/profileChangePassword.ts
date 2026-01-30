@@ -1,4 +1,5 @@
 import { resourcesUrl } from "../../api/base-api";
+import type { UserProfileRequest } from "../../api/user-api";
 import type { Page } from "../../App";
 import { Avatar } from "../../components/avatar";
 import { Button } from "../../components/button";
@@ -11,6 +12,7 @@ import { validatePassword } from "../../utils/validators";
 
 interface ProfileChangePasswordPageProps {
   changePage: (page: Page) => void;
+  user?: UserProfileRequest;
 }
 
 class ProfileChangePasswordPage extends Block {
@@ -123,7 +125,10 @@ class ProfileChangePasswordPage extends Block {
     console.log("profile change password data:", data);
   }
 
-  protected componentDidUpdate(oldProps: any, newProps: any): boolean {
+  protected componentDidUpdate(
+    oldProps: ProfileChangePasswordPageProps,
+    newProps: ProfileChangePasswordPageProps
+  ): boolean {
     if (oldProps.user !== newProps.user && newProps.user) {
       this.children.ProfileChangeAvatar.setProps({
         src: newProps.user?.avatar

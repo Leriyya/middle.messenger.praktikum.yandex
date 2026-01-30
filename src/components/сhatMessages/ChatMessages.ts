@@ -2,8 +2,15 @@ import Block from "../../utils/Block";
 import { formatTime } from "../chatItem/chatItem";
 import "./ChatMessages.scss";
 
+export interface ChatMessage {
+  id?: string;
+  content: string;
+  time: string;
+  user_id?: string | number;
+}
+
 interface ChatMessagesProps {
-  messages: Array<any>;
+  messages: ChatMessage[];
 }
 
 export default class ChatMessages extends Block {
@@ -21,13 +28,13 @@ export default class ChatMessages extends Block {
   }
 
   render() {
-    const messages = this.props.messages ?? [];
+    const messages: ChatMessage[] = this.props.messages ?? [];
 
     return `
       <div class="chatmes">
         ${messages
           .map(
-            (msg: any) => `
+            (msg) => `
           <div class="chatmes__message">
             <div class="chatmes__message-content">${msg.content}</div>
             <div class="chatmes__message-time">

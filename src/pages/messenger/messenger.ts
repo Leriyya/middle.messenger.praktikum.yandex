@@ -1,3 +1,4 @@
+import type { Chat } from "../../api/chat-api";
 import type { Page } from "../../App";
 import { Button } from "../../components/button";
 import ChatsList from "../../components/chatList/chatList";
@@ -15,11 +16,12 @@ import { validateMessage } from "../../utils/validators";
 
 interface MessengerPageProps {
   changePage: (page: Page) => void;
-  selectedChatId?: string;
+  selectedChatId?: number;
   isSettingsOpen?: boolean;
   settingsMode?: SettingMode;
   selectedUsers?: string[];
   userId?: string;
+  chats?: Chat[];
 }
 
 type SettingMode = "add" | "delete" | null;
@@ -30,7 +32,6 @@ class MessengerPage extends Block {
   constructor(props: MessengerPageProps) {
     super({ ...props });
     this.chatsController = new ChatsController();
-    console.log("chatsController", this.chatsController);
   }
 
   init() {
@@ -38,8 +39,6 @@ class MessengerPage extends Block {
     this.chatsController.fetchChats();
 
     const onChangeMessageBind = this.onChangeMessage.bind(this);
-    // const onChangeUserIdBind = this.onChangeUserIdMessage.bind(this);
-    console.log("init props", this.props);
 
     this.onSubmit = this.onSubmit.bind(this);
 
@@ -157,6 +156,7 @@ class MessengerPage extends Block {
       ChatSettingsButton,
       LinkBack,
     };
+    console.log("mess");
 
     this.chatsController.fetchChats();
     super.init();
@@ -222,7 +222,7 @@ class MessengerPage extends Block {
     }
 
     this.setProps({
-      selectedChatId: Number(chatId),
+      selectedChatId: chatId,
     });
     // закрываем старый сокет
     this.chatsController.close();
@@ -245,7 +245,10 @@ class MessengerPage extends Block {
     this.chatsController.getOld(0);
   }
 
-  protected componentDidUpdate(oldProps: any, newProps: any): boolean {
+  protected componentDidUpdate(
+    oldProps: MessengerPageProps,
+    newProps: MessengerPageProps
+  ): boolean {
     if (oldProps.chats !== newProps.chats) {
       this.children.ChatsList.setProps({
         chats: newProps.chats,

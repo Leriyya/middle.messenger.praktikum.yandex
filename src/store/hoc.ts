@@ -3,25 +3,29 @@ import type { Indexed } from "./store";
 import store, { StoreEvents } from "./store";
 import { isEqual } from "../utils/isEqual";
 
-function connect(mapStateToProps: (state: Indexed) => Indexed) {
-  return function(Component: typeof Block) {
-    return class extends Component {
-      constructor(props: any) {
-        let state = mapStateToProps(store.getState());
+function connect<TStateProps extends Indexed>(
+  mapStateToProps: (state: Indexed) => TStateProps
+) {
+  return function <TProps extends Indexed>(
+    Component: new (props: TProps) => Block & { constructor: any }
+  ) {
+    class WithStore extends Component {
+      static EVENTS = (Component as typeof Block).EVENTS;
 
-        super({ ...props, ...state });
+      constructor(props: TProps) {
+        const stateProps = mapStateToProps(store.getState());
+        super({ ...props, ...stateProps });
 
         store.on(StoreEvents.Updated, () => {
           const newState = mapStateToProps(store.getState());
-
-          if (!isEqual(state, newState)) {
+          if (!isEqual(stateProps, newState)) {
             this.setProps({ ...newState });
           }
-
-          state = newState;
         });
       }
-    };
+    }
+
+    return WithStore;
   };
 }
 
