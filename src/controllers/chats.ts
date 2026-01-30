@@ -89,8 +89,6 @@ export class ChatsController {
 
   async fetchChats() {
     const result = await chatsApi.getChats();
-    console.log('fetchChats');
-    
     store.set("chats", JSON.parse(result as string));
   }
 
