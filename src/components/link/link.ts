@@ -1,9 +1,8 @@
-import type { Page } from "../../App";
-import Block from "../../framework/Block";
+import Block from "../../utils/Block";
+import { router } from "../../utils/router/Router";
 import "./link.scss";
 
 interface LinkProps {
-  onClick: (e: Event, page: Page) => void;
   href?: string;
   "data-page"?: string;
   text: string;
@@ -18,16 +17,14 @@ export default class Link extends Block {
           e.preventDefault();
           e.stopPropagation();
 
-          if (props.onClick) {
-            const page = this.props["data-page"];
-            props.onClick(e, page);
+          const href = this.props.href;
+
+          if (href) {
+            router.go(href);
           }
 
           this.changeStyles();
         },
-      },
-      attr: {
-        // class: "footer__link",
       },
     });
   }

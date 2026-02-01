@@ -1,7 +1,5 @@
 import "./profileString.scss";
-
-import Block from "../../framework/Block";
-import "./profileString.scss";
+import Block from "../../utils/Block";
 
 interface ProfileStringProps {
   class?: string;

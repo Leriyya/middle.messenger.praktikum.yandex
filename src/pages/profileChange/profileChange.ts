@@ -1,9 +1,13 @@
+import { resourcesUrl } from "../../api/base-api";
+import type { UserProfileRequest } from "../../api/user-api";
 import type { Page } from "../../App";
 import { Avatar } from "../../components/avatar";
 import { Button } from "../../components/button";
 import Footer from "../../components/footer/footer";
 import InputWithWarning from "../../components/inputWithError/inputWithWarning";
-import Block from "../../framework/Block";
+import { UserController } from "../../controllers/user-profile";
+import { withUser } from "../../store/hoc";
+import Block from "../../utils/Block";
 import {
   validateEmail,
   validateLogin,
@@ -13,15 +17,24 @@ import {
 
 interface ProfileChangePageProps {
   changePage: (page: Page) => void;
+  user?: UserProfileRequest;
 }
 
-export default class ProfileChangePage extends Block {
+class ProfileChangePage extends Block {
+  private profileChangeController: UserController;
+
   constructor(props: ProfileChangePageProps) {
     super({ ...props });
+    this.profileChangeController = new UserController();
   }
 
   init() {
-    const changePage = this.props.changePage;
+    const avatarSrc = this.props.user?.avatar
+      ? `${resourcesUrl}${this.props.user.avatar}`
+      : "/public/default-avatar.png";
+
+    const userController = new UserController();
+
     const onChangeFirstNameBind = this.onChangeFirstName.bind(this);
     const onChangeSecondNameBind = this.onChangeSecondName.bind(this);
     const onChangeEmailBind = this.onChangeEmail.bind(this);
@@ -30,18 +43,15 @@ export default class ProfileChangePage extends Block {
     const onChangePhoneBind = this.onChangePhone.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
-    this.props = {
+    this.setProps({
       events: {
         submit: this.onSubmit,
       },
-    };
-
-    const ProfileChangeFooter = new Footer({
-      changePage: changePage,
     });
+    const ProfileChangeFooter = new Footer();
     const ProfileChangeAvatar = new Avatar({
       id: "avatar",
-      src: "../../../public/dog.jpg",
+      src: avatarSrc,
       alt: "avatar",
     });
     const ProfileChangeButton = new Button({
@@ -56,42 +66,42 @@ export default class ProfileChangePage extends Block {
       type: "text",
       name: "first_name",
       placeholder: "Введите имя",
-      value: "Валерия",
+      value: this.props.user?.first_name ?? "",
       onBlur: onChangeFirstNameBind,
     });
     const InputSecondName = new InputWithWarning({
       type: "text",
       name: "second_name",
       placeholder: "Введите фамилию",
-      value: "Ехно",
+      value: this.props.user?.second_name ?? "",
       onBlur: onChangeSecondNameBind,
     });
     const InputEmail = new InputWithWarning({
       type: "text",
       name: "email",
       placeholder: "Введите почту",
-      value: "bajieri@gmail.com",
+      value: this.props.user?.email ?? "",
       onBlur: onChangeEmailBind,
     });
     const InputDisplayName = new InputWithWarning({
       type: "text",
       name: "display_name",
       placeholder: "Введите ник",
-      value: "Leriyyaa",
+      value: this.props.user?.display_name ?? "",
       onBlur: onChangeDisplayName,
     });
     const InputLogin = new InputWithWarning({
       type: "text",
       name: "login",
       placeholder: "Введите логин",
-      value: "Лера",
+      value: this.props.user?.login ?? "",
       onBlur: onChangeLoginBind,
     });
     const InputPhone = new InputWithWarning({
       type: "text",
       name: "phone",
       placeholder: "Введите номер",
-      value: "+79786978375",
+      value: this.props.user?.phone ?? "",
       onBlur: onChangePhoneBind,
     });
 
@@ -107,6 +117,8 @@ export default class ProfileChangePage extends Block {
       InputLogin,
       InputPhone,
     };
+
+    userController.fetchUser();
     super.init();
   }
 
@@ -196,12 +208,57 @@ export default class ProfileChangePage extends Block {
       return;
     }
     const formData = new FormData(e.target);
-    const data: { [key: string]: FormDataEntryValue } = {};
 
-    formData.forEach((value, key) => {
-      data[key] = value;
-    });
+    const data = {
+      login: formData.get("login") as string,
+      first_name: formData.get("first_name") as string,
+      display_name: formData.get("display_name") as string,
+      email: formData.get("email") as string,
+      second_name: formData.get("second_name") as string,
+      phone: formData.get("phone") as string,
+    };
+
     console.log("profile change data:", data);
+    this.profileChangeController.updateProfile(data);
+  }
+
+  protected componentDidUpdate(
+    oldProps: ProfileChangePageProps,
+    newProps: ProfileChangePageProps
+  ): boolean {
+    if (oldProps.user !== newProps.user && newProps.user) {
+      this.children.ProfileChangeAvatar.setProps({
+        src: newProps.user?.avatar
+          ? `${resourcesUrl}${newProps.user.avatar}`
+          : "/public/default-avatar.png",
+      });
+
+      this.children.InputFirstName.setProps({
+        value: newProps.user?.first_name ?? "",
+      });
+
+      this.children.InputSecondName.setProps({
+        value: newProps.user?.second_name ?? "",
+      });
+
+      this.children.InputEmail.setProps({
+        value: newProps.user?.email ?? "",
+      });
+
+      this.children.InputDisplayName.setProps({
+        value: newProps.user?.display_name ?? "",
+      });
+
+      this.children.InputLogin.setProps({
+        value: newProps.user?.login ?? "",
+      });
+
+      this.children.InputPhone.setProps({
+        value: newProps.user?.phone ?? "",
+      });
+    }
+
+    return false;
   }
 
   render() {
@@ -226,3 +283,5 @@ export default class ProfileChangePage extends Block {
     `;
   }
 }
+
+export default withUser(ProfileChangePage);

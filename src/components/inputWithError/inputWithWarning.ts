@@ -1,4 +1,4 @@
-import Block from "../../framework/Block";
+import Block from "../../utils/Block";
 import Input from "../input/input";
 import "./inputWithWarning.scss";
 

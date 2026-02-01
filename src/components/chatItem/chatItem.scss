@@ -1,8 +1,9 @@
 .chat {
   padding: 12px;
   display: flex;
+  align-items: center;
   gap: 10px;
-  border-bottom: 1px solid var(--light-white);
+  border-bottom: 1px solid var(--chat-item);
 
   &__img {
     background-color: var(--light-white);
