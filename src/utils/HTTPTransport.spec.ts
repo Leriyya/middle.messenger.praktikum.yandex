@@ -38,7 +38,7 @@ describe("HTTPTransport", () => {
       data?: any;
     }
 
-    // @ts-ignore
+    // @ts-expect-error: mock XHR
     global.XMLHttpRequest = MockXHR;
   });
 
@@ -99,7 +99,6 @@ describe("HTTPTransport", () => {
     const api = new HTTPTransport("https://test");
 
     try {
-      // @ts-ignore
       await api.request("/test", {});
     } catch (error: any) {
       expect(error.message).to.equal("No method");

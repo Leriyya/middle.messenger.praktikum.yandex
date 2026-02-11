@@ -9,6 +9,7 @@ describe("Block", () => {
 
   class TestComponent extends Block {
     protected render(): string {
+      // eslint-disable-next-line quotes
       return `<div class="test">{{text}}</div>`;
     }
   }
@@ -34,7 +35,6 @@ describe("Block", () => {
 
     const event = new MouseEvent("click");
     component.getContent().dispatchEvent(event);
-
     expect(handler.calledOnce).to.be.true;
   });
 

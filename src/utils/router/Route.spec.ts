@@ -5,7 +5,7 @@ import { router } from "./Router";
 
 describe("Route", () => {
   beforeEach(() => {
-    document.body.innerHTML = '<div id="app"></div>';
+    document.body.innerHTML = "<div id='app'></div>";
   });
 
   it("match() возвращает true если путь совпадает", () => {

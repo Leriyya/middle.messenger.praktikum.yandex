@@ -1,6 +1,7 @@
 {
   "env": {
     "browser": true,
+    "node": true,
     "es2021": true
   },
   "extends": [
@@ -14,8 +15,11 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "chai-friendly"],
   "rules": {
+    "@typescript-eslint/no-unused-expressions": "off",
+    "no-unused-expressions": "off",
+    "chai-friendly/no-unused-expressions": "error",
     "no-unused-vars": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "indent": "off",
